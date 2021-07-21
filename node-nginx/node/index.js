@@ -21,22 +21,17 @@ const sql_insert = `INSERT INTO people(name) VALUES('João')`;
 connection.query(sql_insert);
 
 const sql_get_all = `SELECT * FROM people`;
-connection.query(sql_get_all);
 
 app.get("/", (req, res) => {
-  html = "<h1>Full Cycle</h1>";
-  /*connection.query(sql_get_all, function (result) {
+  let html = "<h1>Full Cycle</h1><ul>";
+  connection.query(sql_get_all, function (err, result) {
     result.forEach((row) => {
-      html += `<ul><li> ID : ${row["id"]} NOME : ${row["name"]}</li>`;
+      html += `<li> ID : ${row["id"]} NOME : ${row["name"]}</li>`;
     });
-
     html += "</ul>";
-
-    res.send(html);
-  });*/
+    return res.send(html);
+  });
 });
-
-connection.end();
 
 app.listen(port, () => {
   console.log("Rodando na porta " + port);
